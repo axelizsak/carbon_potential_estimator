@@ -1,7 +1,7 @@
 // TABLE 3A.1.4 https://www.ipcc.ch/site/assets/uploads/2018/03/GPG_LULUCF_FULLEN.pdf
 
 pub struct DB {
-    pub biomass: u32
+    pub biomass: u64
 // more value comming
 }
 
