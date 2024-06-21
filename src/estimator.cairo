@@ -8,7 +8,7 @@ pub struct _input {
     //pub AGB: Fixed, // Above Ground Biomass
     pub Air: Fixed, // Land surface
     pub duration: Fixed,
-    pub nb_tree: Fixed,
+    //pub nb_tree: Fixed,
     pub country: felt252
 }
 
@@ -30,17 +30,18 @@ pub fn compute_carbon_stock(input: _input) -> Fixed {
     let co2_ratio = FixedTrait::new_unscaled(44, false) / FixedTrait::new_unscaled(12, false);
     let cf_ratio = FixedTrait::new_unscaled(47, false) / FixedTrait::new_unscaled(100, false);
     let BGB_ratio = FixedTrait::new_unscaled(125, false) / FixedTrait::new_unscaled(100, false);
-    let mut cc_ratio = FixedTrait::new_unscaled(0, false);
-    let a = FixedTrait::new_unscaled(30, false);
-    let b = FixedTrait::new_unscaled(90, false) / FixedTrait::new_unscaled(100, false);
+    let mut cc_ratio = FixedTrait::new_unscaled(1, false);
+    let a = FixedTrait::new_unscaled(30, false); //average duration of growth for a tree
+    let b = FixedTrait::new_unscaled(90, false)
+        / FixedTrait::new_unscaled(100, false); //max cc_ratio
 
     // Convert DB into u64
 
     let country_data: DB = get_data(input.country);
-    let AGB = FixedTrait::new_unscaled(country_data, false);
+    let AGB = FixedTrait::new_unscaled(country_data.biomass, false);
 
     if input.duration >= a {
-        cc_ratio = FixedTrait::new_unscaled(90, false) / FixedTrait::new_unscaled(100, false);
+        cc_ratio = b;
     } else {
         cc_ratio = (input.duration * b) / a;
     }
