@@ -1,17 +1,11 @@
+use core::traits::Into;
 use carbon_potential_estimator::ipcc::{DB, get_data};
 use carbon_potential_estimator::estimator::{compute_carbon_stock, _input};
-use cubit::f64::types::fixed::{FixedTrait, Fixed};
-
-fn fixed_eq(a: Fixed, b: Fixed) -> bool {
-    a.mag == b.mag && a.sign == b.sign
-}
-
-fn fixed_ne(a: Fixed, b: Fixed) -> bool {
-    !fixed_eq(a, b)
-}
+use cubit::f64::{test::helpers::assert_precise, types::fixed::{Fixed, FixedTrait}};
 
 fn print_fixed(f: Fixed) {
-    println!("Fixed {{ mag: {}, sign: {} }}", f.mag, f.sign);
+    let result = f.mag / 4294967296;
+    println!("The carbon potential is: {}", result);
 }
 
 #[test]
@@ -31,8 +25,9 @@ fn test_db() {
     assert!(unknown_db.biomass == 0);
 }
 
+// Test for Banegas Farm (4ha, 30 years, Costa Rica) --> ERS: 1573tCo2
 #[test]
-fn test_compute_carbon_stock() {
+fn test_compute_carbon_stock_banegas_farm() {
     let input = _input {
         Air: FixedTrait::new_unscaled(4, false),
         duration: FixedTrait::new_unscaled(30, false),
@@ -40,8 +35,65 @@ fn test_compute_carbon_stock() {
     };
 
     let result = compute_carbon_stock(input);
-    print_fixed(result);
+    //print_fixed(result);
+
     let expected_result = FixedTrait::new_unscaled(17061, false)
         / FixedTrait::new_unscaled(10, false);
-    assert!(fixed_eq(result, expected_result));
+    assert_precise(
+        result, expected_result.mag.into(), 'wrong estimation', Option::Some(4294967296)
+    );
+}
+
+// Test for Las Delicias (18ha, 20 years, Panama) --> Wildsense: 4804tCo2
+#[test]
+fn test_compute_carbon_stock_las_delicias() {
+    let input = _input {
+        Air: FixedTrait::new_unscaled(18, false),
+        duration: FixedTrait::new_unscaled(20, false),
+        country: 'Panama'.into()
+    };
+
+    let result = compute_carbon_stock(input);
+    //print_fixed(result);
+
+    let expected_result = FixedTrait::new_unscaled(7491, false);
+    assert_precise(
+        result, expected_result.mag.into(), 'wrong estimation', Option::Some(4294967296)
+    );
+}
+
+// Test for Karathuru (86ha, 23 years, Myanmar) --> Verra: 70000tCo2
+#[test]
+fn test_compute_carbon_stock_karathuru() {
+    let input = _input {
+        Air: FixedTrait::new_unscaled(86, false),
+        duration: FixedTrait::new_unscaled(23, false),
+        country: 'Myanmar'.into()
+    };
+
+    let result = compute_carbon_stock(input);
+    //print_fixed(result);
+
+    let expected_result = FixedTrait::new_unscaled(7286, false);
+    assert_precise(
+        result, expected_result.mag.into(), 'wrong estimation', Option::Some(4294967296)
+    );
+}
+
+// Test for Manjarisoa (20ha, 20 years, Madagascar) --> Wildsense: 8000tCo2
+#[test]
+fn test_compute_carbon_stock_manjarisoa() {
+    let input = _input {
+        Air: FixedTrait::new_unscaled(20, false),
+        duration: FixedTrait::new_unscaled(20, false),
+        country: 'Madagascar'.into()
+    };
+
+    let result = compute_carbon_stock(input);
+    //print_fixed(result);
+
+    let expected_result = FixedTrait::new_unscaled(5014, false);
+    assert_precise(
+        result, expected_result.mag.into(), 'wrong estimation', Option::Some(4294967296)
+    );
 }
