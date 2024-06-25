@@ -11,7 +11,7 @@
 // Air = input
 // cc_ratio = canopy coverage as a function of total surface area, to do, try to make an average size of the top of a tree during all the duration
 
-use cubit::f64::types::fixed::{Fixed, FixedTrait, ONE};
+use cubit::f64::types::fixed::{Fixed, FixedTrait};
 use carbon_potential_estimator::ipcc::{DB, get_data};
 
 #[derive(Drop, Serde)]
