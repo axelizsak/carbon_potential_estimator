@@ -2,7 +2,7 @@
 
 
 ### Introduction
-This project aims to calculate the carbon potential of a project based on a formula. This document provides a detailed explanation of the formula used, the constants and variables involved. It's a formula derived from ERS, with its own choices for the sake of precision.
+This project aims to calculate the carbon potential of a forest project based on a formula. This document provides a detailed explanation of the formula used, the constants and variables involved. It's a formula derived from ERS, with its own choices for the sake of precision.
 
 
 ### Basic Formula
