@@ -1,5 +1,9 @@
 ## Carbon Potential Calculation
 
+### Warning
+
+Work still in progress, [to test](https://sepolia.starkscan.co/contract/0x07fa33d1e9eeb01f62337106698673550b10a284b81948691547cd444b6c6376#read-write-contract-sub-write) (Sepolia).
+
 
 ### Introduction
 This project aims to calculate the carbon potential of a forest project based on a formula. This document provides a detailed explanation of the formula used, the constants and variables involved. It's a formula derived from ERS, with its own choices for the sake of precision.
