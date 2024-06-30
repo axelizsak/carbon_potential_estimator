@@ -1,6 +1,6 @@
 ## Carbon Potential Calculation
 
-### Warning
+### Warning ⚠️
 
 Work still in progress, [to test](https://sepolia.starkscan.co/contract/0x07fa33d1e9eeb01f62337106698673550b10a284b81948691547cd444b6c6376#read-write-contract-sub-write) (Sepolia).
 
